@@ -6,5 +6,7 @@ services/auth/package-lock.json
 services/notes/node_modules/*
 services/notes/package.json
 services/notes/package-lock.json
-status-codes.pngresponse-codes.PNG
+status-codes.png
+response-codes.PNG
+
 services/auth/config.js
