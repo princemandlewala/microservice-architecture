@@ -15,6 +15,6 @@ if(dbConnection){
 else{
 	console.log("Not Connected to MongoDb");
 }
-app.listen(8000,function(){
+app.listen(8002,function(){
 	console.log('Server is listening at port 8000');
 });
