@@ -85,7 +85,7 @@ router.post('/register',function(req,res){
 
 router.post('/authenticate',function(req,res){
     var error = [];
-    if(!req.body.username || req.body.password){
+    if(!req.body.user_name || !req.body.password){
         error.push("Username or password is missing or both are missing")
         res.status(400).json({status:400,message:"Username and password both are required for authentication",error:error});
     }
@@ -95,6 +95,19 @@ router.post('/authenticate',function(req,res){
             error.push(err.message);
             res.status(500).json({status:500,message:"internal error",error:error});
         }
+        if(!user){
+            error.push("No such user found");
+            res.status(404).json({status:404,message:"Authentication failed",auth: "failure",error:error});
+        }
+        if(user.password!=req.body.password){
+            error.push("Wrong password");
+            res.status(401).json({status:401,message:"Authentication failed",auth: "failure",error:error});
+        }
+        var token = jwt.sign({id: user._id},config.secret,{
+            expiresIn: 86400
+        });
+        error.push("None");
+        res.status(200).json({status:200,message:"Successfully authenticated. Please provide token in futher communications.",auth:"success",token:token,error:error});     
     })
 });
 

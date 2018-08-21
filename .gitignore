@@ -1,10 +1,8 @@
 .vscode/*
 plan.txt
 services/auth/node_modules/*
-services/auth/package.json
 services/auth/package-lock.json
 services/notes/node_modules/*
-services/notes/package.json
 services/notes/package-lock.json
 status-codes.png
 response-codes.PNG
@@ -3407,7 +3405,5 @@ services/user/node_modules/yallist/README.md
 services/user/node_modules/yallist/iterator.js
 services/user/node_modules/yallist/package.json
 services/user/node_modules/yallist/yallist.js
-
-services/user/package.json
 
 services/user/package-lock.json
