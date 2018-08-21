@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const user_model = require('../models/user')
+const jwt = require('jsonwebtoken');
+var config = require('../config')
 
 
-router.post('/',function(req,res){
+router.post('/register',function(req,res){
     var data = req.body;
     var error = [];
     var message = [];
@@ -80,5 +82,21 @@ router.post('/',function(req,res){
         res.status(201).json({status:201,message:"OK",data:link,type:"success",error:error});
     });
 });
+
+router.post('/authenticate',function(req,res){
+    var error = [];
+    if(!req.body.username || req.body.password){
+        error.push("Username or password is missing or both are missing")
+        res.status(400).json({status:400,message:"Username and password both are required for authentication",error:error});
+    }
+    var user_name = req.body.user_name.toLowerCase();
+    user_model.findOne({'user_name':user_name}, function(err,user){
+        if(err){
+            error.push(err.message);
+            res.status(500).json({status:500,message:"internal error",error:error});
+        }
+    })
+});
+
 
 module.exports = router;
