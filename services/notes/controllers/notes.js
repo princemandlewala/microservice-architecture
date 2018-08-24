@@ -6,7 +6,10 @@ const dbConnection = require('../database/connection');
 router.get('/getAll/:user_name',function(req,res){
     var user_name = req.params.user_name.toLowerCase();
     var error = [];
-    console.log("inside getAll");
+    if(!req.body.auth_token && !req.params.auth_token && !req.headers['auth_token']){
+        error.push("malformed request");
+        return res.status(400).json({status:400,message:"missing authorization token in request",data:null,error:error});
+    }
     note_model.find({user_name:user_name},function(err,notes){
         if(err){
             error.push("Internal error");

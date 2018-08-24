@@ -1,7 +1,7 @@
 .vscode/*
 plan.txt
-services/auth/node_modules/*
-services/auth/package-lock.json
+services/auth-token-based/node_modules/*
+services/auth-token-based/package-lock.json
 services/notes/node_modules/*
 services/notes/package-lock.json
 status-codes.png

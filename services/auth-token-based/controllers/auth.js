@@ -103,13 +103,12 @@ router.post('/authenticate',function(req,res){
             error.push("Wrong password");
             res.status(401).json({status:401,message:"Authentication failed",auth: "failure",error:error});
         }
-        var token = jwt.sign({id: user._id},config.secret,{
+        var token = jwt.sign({auth:'magic',id: user._id, user_name: user.user_name},config.secret,{
             expiresIn: 86400
         });
         error.push("None");
         res.status(200).json({status:200,message:"Successfully authenticated. Please provide token in futher communications.",auth:"success",token:token,error:error});     
     })
 });
-
 
 module.exports = router;
