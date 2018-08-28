@@ -100,6 +100,43 @@ router.post('/create',function(req,res){
     });
 });
 
+router.get('/get/:note_id',function(req,res){
+    var error = [];
+    if(!req.body.auth_token && !req.params.auth_token && !req.headers['auth_token']){
+        error.push("malformed request");
+        return res.status(401).json({status:401,message:"missing authorization token in request",data:null,error:error});
+    }
+    var token = req.body.auth_token || req.params.auth_token || req.headers['auth_token'];
+    jwt.verify(token,config.secret,function(err,decoded){
+        if(err){
+            if(err.name=='TokenExpiredError'){
+                error.push("token expired");
+                return res.status(400).json({status:400,message:"Token provided is expired. Please use authentication path to get new token",error:error});
+            }
+        }
+        console.log(decoded.user_name)
+        var user_name = decoded.user_name;
+        var note_id = req.params.note_id;
+        var error = [];
+        var message = [];
+        note_model.findOne({_id: note_id, user_name: user_name},function(err,note){
+            if(err){
+                console.log(err);
+                error.push(err.name);
+                message.push("internal error");
+                res.status(500).json({status:500, message:message,data:null,error:error});
+            }
+            if(!note){
+                error.push("No note found with node id: "+node_id);
+                return res.status(404).json({status:404,message:"No data found",data:null,error:error});
+            }
+            error.push("None");
+            console.log(note);
+            res.status(200).json({status:200,message:"OK",data:note,error:error});
+        })
+    });
+});
+
 router.post('/update/:note_id',function(req,res){
     var error = [];
     if(!req.body.auth_token && !req.params.auth_token && !req.headers['auth_token']){
