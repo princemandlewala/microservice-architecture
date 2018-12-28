@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dbConnection = require('./database/connection');
 const morgan = require('morgan');
-const user = require('./models/note');
 const app = express();
 
 app.use(bodyParser.json());
