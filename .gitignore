@@ -20,4 +20,4 @@ services/user/package-lock.json
 services/api-gateway/node_modules/*
 services/api-gateway/package-lock.json
 services/api-gateway/url.js
-
+services/redis-demo
